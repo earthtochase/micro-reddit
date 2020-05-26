@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+    include PostsHelper
+    
     def index
         @posts = Post.all
     end
@@ -14,7 +16,7 @@ class PostsController < ApplicationController
     def create
         @post = Post.new
         @post.title = params[:post][:title]
-        @post.content = params[:content]
+        @post.body = params[:body]
         @post.save
 
         redirect_to post_path(@post)
@@ -26,6 +28,10 @@ class PostsController < ApplicationController
 
         flash.notice = "Post '#{@post.title}' updated!"
         redirect_to post_path(@post)
+    end
+
+    def edit
+        @post = Post.find(params[:id])
     end
 
 end
